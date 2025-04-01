@@ -3,6 +3,8 @@ package com.group.dashboard.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -16,14 +18,22 @@ public class Indicator {
 
     private String name;
 
-    private String targetPerDay;
+    private String targetPerWeek;
 
-    private String day;
+    @Temporal(TemporalType.DATE)
+    private Date day;
 
     private String dayValue;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+
+    @PreUpdate
+    @PrePersist
+    protected void setDay(){
+        this.day =new Date();
+    }
 
 }
